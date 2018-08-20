@@ -31,6 +31,7 @@
     "universal-cookie": "^3.0.0"
   },
   "devDependencies": {
+    "@types/next": "^6.1.2",
     "@types/next-redux-wrapper": "^2.0.0",
     "@types/react": "^16.4.11",
     "@types/react-redux": "^6.0.6",
