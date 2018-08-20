@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# IDEA setting file
+.idea
+redux-next-boilerplate.iml
