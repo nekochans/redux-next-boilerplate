@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Next.js + Redux boilerplate",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "next src",
+    "build": "next build src",
+    "start": "next start src"
   },
   "repository": {
     "type": "git",
