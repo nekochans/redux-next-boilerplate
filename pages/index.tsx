@@ -8,19 +8,16 @@ interface IProps {
   updateAnnouncement: any
 }
 
-interface IState {}
+const IndexPage: React.SFC<IProps> = (props: IProps) => {
+  const { announcementMessage, updateAnnouncement } = props;
 
-class IndexPage extends React.Component<IProps, IState> {
-  render() {
-    const { announcementMessage, updateAnnouncement } = this.props;
-    return (
-      <div>
-        Announcement: {announcementMessage}
-        <button onClick={() => updateAnnouncement('We are closed today!')}>Close!</button>
-      </div>
-    )
-  }
-}
+  return (
+    <div>
+      Announcement: {announcementMessage}
+      <button onClick={() => updateAnnouncement('We are closed today!')}>Close!</button>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   announcementMessage: state.message,
