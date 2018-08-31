@@ -7,6 +7,7 @@
     "build": "next build src",
     "start": "next start src",
     "tslint": "tslint --project tsconfig.json --config tslint.json 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "format": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'"
   },
   "repository": {
