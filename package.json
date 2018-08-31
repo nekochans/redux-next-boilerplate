@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next src",
     "build": "next build src",
-    "start": "next start src"
+    "start": "next start src",
+    "tslint": "tslint --project tsconfig.json --config tslint.json 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "format": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
