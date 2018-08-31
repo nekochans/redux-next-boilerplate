@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "tslint-config-airbnb",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+
+    // TSLintの標準ルールの上書き
+    "max-file-line-count": [true, 200],
+    "variable-name": false,
+    "strict-boolean-expressions": false,
+    "no-parameter-properties": true,
+
+    // tslint-config-airbnb
+    "import-name": false,
+    "object-shorthand-properties-first": false
+  }
+}
