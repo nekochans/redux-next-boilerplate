@@ -2,11 +2,11 @@ import React from "react";
 import { Provider } from "react-redux";
 import App, { AppComponentProps, Container } from "next/app";
 import withRedux from "next-redux-wrapper";
-import { initStore } from "../store";
+import initStore, { IReduxState } from "../store";
+import { Store } from "redux";
 
 interface IProps extends AppComponentProps {
-  // TODO 型定義を行う
-  store: any;
+  store: Store<IReduxState>;
 }
 
 export default withRedux(initStore)(

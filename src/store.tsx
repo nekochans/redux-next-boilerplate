@@ -1,12 +1,22 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, combineReducers } from "redux";
+import counter, { CounterAction, ICounterState } from "./modules/Counter";
+import { Action } from "redux-actions";
 import { composeWithDevTools } from "redux-devtools-extension";
-import thunkMiddleware from "redux-thunk";
-import { reducer } from "./states/announcement/reducer";
 
-export const initStore = initialState => {
+export interface IReduxState {
+  counter: ICounterState;
+}
+
+export type ReduxAction = CounterAction | Action<any>;
+
+export const initStore = (initialState = { counter: { count: 0 } }) => {
   return createStore(
-    reducer,
+    combineReducers({
+      counter
+    }),
     initialState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware))
+    composeWithDevTools()
   );
 };
+
+export default initStore;
