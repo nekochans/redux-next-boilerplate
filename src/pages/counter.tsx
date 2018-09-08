@@ -1,6 +1,6 @@
 import React from "react";
 import { ICounterState } from "../modules/Counter";
-import CounterContainer , { ActionDispatcher } from "../containers/Counter";
+import CounterContainer, { ActionDispatcher } from "../containers/Counter";
 
 interface IProps {
   counterState: ICounterState;
