@@ -3,7 +3,7 @@ import { ActionDispatcher } from "../containers/Counter";
 import { ICounterState } from "../modules/Counter";
 
 interface IProps {
-  value: ICounterState;
+  counterState: ICounterState;
   actions: ActionDispatcher;
 }
 
@@ -17,7 +17,7 @@ export const Counter: React.SFC<IProps> = (props: IProps) => {
 
   return (
     <>
-      <p>{props.value.count}</p>
+      <p>{props.counterState.count}</p>
       <button onClick={incrementClickHandler}>increment!</button>
       <button onClick={decrementClickHandler}>decrement!</button>
     </>

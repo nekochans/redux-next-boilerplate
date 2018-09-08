@@ -31,11 +31,11 @@ export class ActionDispatcher {
   }
 }
 
-const mapStateToProps: MapStateToProps<{ value: ICounterState }, any, any> = (
+const mapStateToProps: MapStateToProps<{ counterState: ICounterState }, any, any> = (
   state: IReduxState
 ) => {
   return {
-    value: state.counter
+    counterState: state.counter
   };
 };
 
