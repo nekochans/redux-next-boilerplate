@@ -1,23 +1,24 @@
 import React from "react";
-import { ActionDispatcher } from "../containers/Counter";
-import { ICounterState } from "../modules/Counter";
+import { ICounterState, counterActions } from "../modules/Counter";
+import { Dispatch } from "redux";
+import { ReduxAction } from "../store";
 
 interface IProps {
-  counterState: ICounterState;
-  actions: ActionDispatcher;
+  value: ICounterState;
+  actions: Dispatch<ReduxAction>;
 }
 
 export const Counter: React.SFC<IProps> = (props: IProps) => {
-  const incrementClickHandler = async () => {
-    await props.actions.increment();
+  const incrementClickHandler = () => {
+    props.actions(counterActions.increment());
   };
-  const decrementClickHandler = async () => {
-    await props.actions.decrement();
+  const decrementClickHandler = () => {
+    props.actions(counterActions.decrement());
   };
 
   return (
     <>
-      <p>{props.counterState.count}</p>
+      <p>{props.value.count}</p>
       <button onClick={incrementClickHandler}>increment!</button>
       <button onClick={decrementClickHandler}>decrement!</button>
     </>
