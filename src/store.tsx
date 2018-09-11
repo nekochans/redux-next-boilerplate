@@ -3,6 +3,7 @@ import counter, { CounterAction, ICounterState } from "./modules/Counter";
 import { Action } from "redux-actions";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
+import logger from "redux-logger";
 import rootSaga from "./middlewares/saga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -19,7 +20,7 @@ export const configureStore = (initialState = { counter: { count: 0 } }) => {
       counter
     }),
     initialState,
-    composeWithDevTools(applyMiddleware(sagaMiddleware))
+    composeWithDevTools(applyMiddleware(sagaMiddleware), applyMiddleware(logger))
   );
 
   store.runSagaTask = () => {
