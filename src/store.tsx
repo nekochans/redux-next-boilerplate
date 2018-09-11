@@ -20,7 +20,10 @@ export const configureStore = (initialState = { counter: { count: 0 } }) => {
       counter
     }),
     initialState,
-    composeWithDevTools(applyMiddleware(sagaMiddleware), applyMiddleware(logger))
+    composeWithDevTools(
+      applyMiddleware(sagaMiddleware),
+      applyMiddleware(logger)
+    )
   );
 
   store.runSagaTask = () => {

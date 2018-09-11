@@ -1,12 +1,28 @@
 import { Action } from "redux-actions";
 
 enum ActionType {
+  post_increment_request = "POST_INCREMENT_REQUEST",
+  post_decrement_request = "POST_DECREMENT_REQUEST",
   increment = "INCREMENT",
   decrement = "DECREMENT"
 }
 
 export type CounterAction = Action<{}> | Action<{}>;
 
+const postIncrementRequest = (): CounterAction => {
+  return {
+    type: ActionType.post_increment_request,
+    payload: {},
+    error: false
+  };
+};
+const postDecrementRequest = (): CounterAction => {
+  return {
+    type: ActionType.post_decrement_request,
+    payload: {},
+    error: false
+  };
+};
 const increment = (): CounterAction => {
   return {
     type: ActionType.increment,
@@ -22,7 +38,12 @@ const decrement = (): CounterAction => {
   };
 };
 
-export const counterActions = { increment, decrement };
+export const counterActions = {
+  increment,
+  decrement,
+  postIncrementRequest,
+  postDecrementRequest
+};
 
 export interface ICounterState {
   count: number;
