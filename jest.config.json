@@ -1,0 +1,24 @@
+{
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx}"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json",
+    "node"
+  ],
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1"
+  },
+  "roots": [
+    "test"
+  ],
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|jsx|ts|tsx)$",
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "verbose": true
+}
