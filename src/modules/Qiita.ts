@@ -1,8 +1,9 @@
 import { ActionMeta } from "redux-actions";
-import { QiitaUsers } from "../domain/qiita/QiitaUsers";
-import IFetchUserRequest = QiitaUsers.IFetchUserRequest;
-import IUserResponse = QiitaUsers.IUserResponse;
-import IFetchUserFailureResponse = QiitaUsers.IFetchUserFailureResponse;
+import {
+  IFetchQiitaUserRequest,
+  IFetchQiitaUserResponse,
+  IFetchQiitaUserFailureResponse
+} from "../domain/qiita/Qiita";
 
 enum ActionType {
   post_fetch_user_request = "POST_FETCH_USER_REQUEST",
@@ -15,11 +16,11 @@ export interface IMeta {
 }
 
 export type QiitaAction =
-  | ActionMeta<IFetchUserRequest, IMeta>
-  | ActionMeta<IUserResponse, IMeta>
-  | ActionMeta<IFetchUserFailureResponse, IMeta>;
+  | ActionMeta<IFetchQiitaUserRequest, IMeta>
+  | ActionMeta<IFetchQiitaUserResponse, IMeta>
+  | ActionMeta<IFetchQiitaUserFailureResponse, IMeta>;
 
-const postFetchUserRequest = (request: IFetchUserRequest): QiitaAction => {
+const postFetchUserRequest = (request: IFetchQiitaUserRequest): QiitaAction => {
   return {
     type: ActionType.post_fetch_user_request,
     payload: request,
@@ -28,7 +29,7 @@ const postFetchUserRequest = (request: IFetchUserRequest): QiitaAction => {
   };
 };
 
-const fetchUserSuccess = (response: IUserResponse): QiitaAction => {
+const fetchUserSuccess = (response: IFetchQiitaUserResponse): QiitaAction => {
   return {
     type: ActionType.fetch_user_success,
     payload: response,
@@ -37,7 +38,9 @@ const fetchUserSuccess = (response: IUserResponse): QiitaAction => {
   };
 };
 
-const fetchUserFailure = (response: IFetchUserFailureResponse): QiitaAction => {
+const fetchUserFailure = (
+  response: IFetchQiitaUserFailureResponse
+): QiitaAction => {
   return {
     type: ActionType.fetch_user_failure,
     payload: response,
