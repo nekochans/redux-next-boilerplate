@@ -5,14 +5,16 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import logger from "redux-logger";
 import rootSaga from "./middlewares/saga";
+import { IQiitaState, QiitaAction } from "./modules/Qiita";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export interface IReduxState {
   counter: ICounterState;
+  qiita: IQiitaState;
 }
 
-export type ReduxAction = CounterAction | Action<any>;
+export type ReduxAction = CounterAction | QiitaAction | Action<any>;
 
 export const configureStore = (initialState = { counter: { count: 0 } }) => {
   const store = createStore(
