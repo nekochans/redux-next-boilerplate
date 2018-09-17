@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import logger from "redux-logger";
 import rootSaga from "./middlewares/saga";
-import { IQiitaState, QiitaAction } from "./modules/Qiita";
+import qiita, { IQiitaState, QiitaAction } from "./modules/Qiita";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,10 +16,12 @@ export interface IReduxState {
 
 export type ReduxAction = CounterAction | QiitaAction | Action<any>;
 
+// TODO initialState は定数的な場所で作成するように改修する
 export const configureStore = (initialState = { counter: { count: 0 } }) => {
   const store = createStore(
     combineReducers({
-      counter
+      counter,
+      qiita
     }),
     initialState,
     composeWithDevTools(

@@ -10,11 +10,13 @@ import QiitaUser from "../components/QiitaUser";
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: IQiitaState;
+  isServer: boolean;
 }
 
 export default class Qiita extends React.Component<IProps> {
   static async getInitialProps(ctx: NextContext) {
-    if (ctx.err != null) {
+    const { err } = ctx;
+    if (err != null) {
       // TODO 何らかのError処理を行う
     }
 

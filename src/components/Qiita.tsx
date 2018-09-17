@@ -1,7 +1,8 @@
 import React from "react";
 import { ReduxAction } from "../store";
-import { IQiitaState } from "../modules/Qiita";
+import { IQiitaState, qiitaActions } from "../modules/Qiita";
 import { Dispatch } from "redux";
+import QiitaUser from "./QiitaUser";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
@@ -12,7 +13,6 @@ export default class Qiita extends React.Component<IProps> {
   private userId: string;
 
   constructor(props: IProps) {
-    console.log(props);
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,7 +25,7 @@ export default class Qiita extends React.Component<IProps> {
 
   handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.log(this.userId);
+    this.props.actions(qiitaActions.postFetchUserRequest({ id: this.userId }));
   }
 
   render() {
@@ -38,6 +38,7 @@ export default class Qiita extends React.Component<IProps> {
             送信
           </button>
         </form>
+        {this.props.value.user ? <QiitaUser value={this.props.value} /> : ""}
       </>
     );
   }

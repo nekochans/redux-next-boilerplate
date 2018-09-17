@@ -20,7 +20,12 @@ export const fetchUser = async (
 ): Promise<IFetchQiitaUserResponse> => {
   return axios
     .get<IFetchQiitaUserResponse>(
-      `https://qiita.com/api/v2/users/${request.id}`
+      `https://qiita.com/api/v2/users/${request.id}`,
+      {
+        headers: {
+          Authorization: "Bearer d78f582769a5c5ad556e73d495caf1823c75f280"
+        }
+      }
     )
     .then((axiosResponse: AxiosResponse) => {
       return Promise.resolve(axiosResponse.data);
