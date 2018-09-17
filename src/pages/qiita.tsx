@@ -4,7 +4,7 @@ import { IQiitaState } from "../modules/Qiita";
 import { Dispatch } from "redux";
 import QiitaContainer from "../containers/Qiita";
 import { NextContext } from "next";
-import { qiitaActions } from "../modules/Qiita";
+import { fetchUser } from "../domain/Qiita";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
@@ -21,15 +21,17 @@ export default class Qiita extends React.Component<IProps> {
       id: "keitakn"
     };
 
-    ctx.store.dispatch(qiitaActions.postFetchUserRequest(request));
+    const user = await fetchUser(request);
 
-    return { isServer: ctx.isServer };
+    return { value: user };
   }
 
   render() {
     return (
       <>
         <QiitaContainer value={this.props.value} actions={this.props.actions} />
+        <p>{this.props.value.id}</p>
+        <img src={this.props.value["profile_image_url"]} />
       </>
     );
   }
