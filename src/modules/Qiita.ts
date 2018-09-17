@@ -3,7 +3,7 @@ import {
   IFetchQiitaUserRequest,
   IFetchQiitaUserResponse,
   IFetchQiitaUserFailureResponse
-} from "../domain/qiita/Qiita";
+} from "../domain/Qiita";
 
 enum ActionType {
   post_fetch_user_request = "POST_FETCH_USER_REQUEST",
