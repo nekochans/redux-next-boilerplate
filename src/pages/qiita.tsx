@@ -23,15 +23,21 @@ export default class Qiita extends React.Component<IProps> {
 
     const user = await fetchUser(request);
 
-    return { value: user };
+    return {
+      value: {
+        id: request.id,
+        loading: false,
+        user
+      }
+    };
   }
 
   render() {
     return (
       <>
         <QiitaContainer value={this.props.value} actions={this.props.actions} />
-        <p>{this.props.value.id}</p>
-        <img src={this.props.value["profile_image_url"]} />
+        <p>{this.props.value.user.id}</p>
+        <img src={this.props.value.user["profile_image_url"]} />
       </>
     );
   }
