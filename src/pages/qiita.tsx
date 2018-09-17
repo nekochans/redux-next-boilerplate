@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import QiitaContainer from "../containers/Qiita";
 import { NextContext } from "next";
 import { fetchUser } from "../domain/Qiita";
+import QiitaUser from "../components/QiitaUser";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
@@ -36,8 +37,7 @@ export default class Qiita extends React.Component<IProps> {
     return (
       <>
         <QiitaContainer value={this.props.value} actions={this.props.actions} />
-        <p>{this.props.value.user.id}</p>
-        <img src={this.props.value.user["profile_image_url"]} />
+        <QiitaUser value={this.props.value} />
       </>
     );
   }
