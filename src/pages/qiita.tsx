@@ -8,7 +8,6 @@ import { NextContext } from "next";
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: IQiitaState;
-  isServer: boolean;
 }
 
 export default class Qiita extends React.Component<IProps> {
