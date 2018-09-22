@@ -5,9 +5,18 @@ const Index: React.SFC = () => {
   return (
     <>
       <h1>🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱</h1>
-      <Link href="/counter">
-        <a>counter</a>
-      </Link>
+      <ul>
+        <li>
+          <Link href="/counter">
+            <a>counter</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/qiita">
+            <a>qiita</a>
+          </Link>
+        </li>
+      </ul>
     </>
   );
 };
