@@ -23,6 +23,7 @@
     "allowSyntheticDefaultImports": true,
     // Decoratorを利用可能にする
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "newLine": "LF",
     "typeRoots": [
       "node_modules/@types",
