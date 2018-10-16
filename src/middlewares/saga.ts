@@ -1,5 +1,9 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { CounterAction, counterActions } from "../modules/Counter";
+import {
+  CounterAction,
+  counterActions,
+  CounterActionType
+} from "../modules/Counter";
 import { QiitaAction, qiitaActions } from "../modules/Qiita";
 import { fetchUser } from "../domain/Qiita";
 
@@ -29,8 +33,8 @@ function* fetchQiitaUser(action: QiitaAction) {
 
 function* rootSaga() {
   // TODO ActionTypeはエクスポートして使えるようにしたほうが良い
-  yield takeLatest("POST_INCREMENT_REQUEST", asyncIncrement);
-  yield takeLatest("POST_DECREMENT_REQUEST", asyncDecrement);
+  yield takeLatest(CounterActionType.post_increment_request, asyncIncrement);
+  yield takeLatest(CounterActionType.post_decrement_request, asyncDecrement);
   yield takeLatest("POST_FETCH_USER_REQUEST", fetchQiitaUser);
 }
 
