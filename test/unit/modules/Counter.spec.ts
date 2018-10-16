@@ -6,7 +6,7 @@ describe("src/modules/Counter", () => {
       count: 1
     };
 
-    const newState = reducer(state, counterActions.increment());
+    const newState = reducer(state, counterActions.increment({}));
     expect(newState.count).toBe(2);
   });
 
@@ -15,7 +15,7 @@ describe("src/modules/Counter", () => {
       count: 1
     };
 
-    const newState = reducer(state, counterActions.decrement());
+    const newState = reducer(state, counterActions.decrement({}));
     expect(newState.count).toBe(0);
   });
 });

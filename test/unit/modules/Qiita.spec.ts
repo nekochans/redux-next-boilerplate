@@ -54,6 +54,6 @@ describe("src/modules/Qiita", () => {
     expect(newState.id).toBe("qiita");
     expect(newState.loading).toBe(false);
     expect(newState.user).toBe(undefined);
-    expect(newState.error).toEqual({ error: userError });
+    expect(newState.error).toEqual(userError);
   });
 });

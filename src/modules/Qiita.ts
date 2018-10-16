@@ -1,11 +1,12 @@
-import { ActionMeta } from "redux-actions";
 import {
   IFetchQiitaUserRequest,
   IFetchQiitaUserResponse,
   IFetchQiitaUserFailureResponse
 } from "../domain/Qiita";
+import actionCreatorFactory, { Action, ActionCreator } from "typescript-fsa";
+import { reducerWithInitialState } from "typescript-fsa-reducers";
 
-enum ActionType {
+export enum QiitaActionType {
   post_fetch_user_request = "POST_FETCH_USER_REQUEST",
   fetch_user_success = "FETCH_USER_SUCCESS",
   fetch_user_failure = "FETCH_USER_FAILURE"
@@ -15,41 +16,36 @@ export interface IMeta {
   loading: boolean;
 }
 
+const actionCreator = actionCreatorFactory();
+
 export type QiitaAction =
-  | ActionMeta<IFetchQiitaUserRequest, IMeta>
-  | ActionMeta<IFetchQiitaUserResponse, IMeta>
-  | ActionMeta<IFetchQiitaUserFailureResponse, IMeta>;
+  | Action<IFetchQiitaUserRequest>
+  | Action<IFetchQiitaUserResponse>
+  | Action<IFetchQiitaUserFailureResponse>;
 
-const postFetchUserRequest = (request: IFetchQiitaUserRequest): QiitaAction => {
-  return {
-    type: ActionType.post_fetch_user_request,
-    payload: request,
-    error: false,
-    meta: { loading: true }
-  };
-};
+const postFetchUserRequest = actionCreator<IFetchQiitaUserRequest>(
+  QiitaActionType.post_fetch_user_request,
+  { loading: true },
+  false
+);
+const fetchUserSuccess = actionCreator<IFetchQiitaUserResponse>(
+  QiitaActionType.fetch_user_success,
+  { loading: false },
+  false
+);
+const fetchUserFailure = actionCreator<IFetchQiitaUserFailureResponse>(
+  QiitaActionType.fetch_user_failure,
+  { loading: false },
+  true
+);
 
-const fetchUserSuccess = (response: IFetchQiitaUserResponse): QiitaAction => {
-  return {
-    type: ActionType.fetch_user_success,
-    payload: response,
-    error: false,
-    meta: { loading: false }
-  };
-};
+interface IQiitaActions {
+  postFetchUserRequest: ActionCreator<IFetchQiitaUserRequest>;
+  fetchUserSuccess: ActionCreator<IFetchQiitaUserResponse>;
+  fetchUserFailure: ActionCreator<IFetchQiitaUserFailureResponse>;
+}
 
-const fetchUserFailure = (
-  response: IFetchQiitaUserFailureResponse
-): QiitaAction => {
-  return {
-    type: ActionType.fetch_user_failure,
-    payload: response,
-    error: true,
-    meta: { loading: false }
-  };
-};
-
-export const qiitaActions = {
+export const qiitaActions: IQiitaActions = {
   postFetchUserRequest,
   fetchUserSuccess,
   fetchUserFailure
@@ -68,32 +64,36 @@ const initialState: IQiitaState = {
   loading: false
 };
 
-export const reducer = (
-  state: IQiitaState = initialState,
-  action: QiitaAction
-): IQiitaState => {
-  switch (action.type) {
-    case ActionType.post_fetch_user_request:
+export const reducer = reducerWithInitialState(initialState)
+  .caseWithAction<IFetchQiitaUserRequest>(
+    qiitaActions.postFetchUserRequest,
+    (state, action) => {
       return {
         ...state,
-        id: action.payload["id"],
-        loading: action.meta.loading
+        id: action.payload.id,
+        loading: action.meta["loading"]
       };
-    case ActionType.fetch_user_success:
+    }
+  )
+  .caseWithAction<IFetchQiitaUserResponse>(
+    qiitaActions.fetchUserSuccess,
+    (state, action) => {
       return {
         ...state,
-        loading: action.meta.loading,
-        user: action.payload
+        user: action.payload,
+        loading: action.meta["loading"]
       };
-    case ActionType.fetch_user_failure:
+    }
+  )
+  .caseWithAction<IFetchQiitaUserFailureResponse>(
+    qiitaActions.fetchUserFailure,
+    (state, action) => {
       return {
         ...state,
-        loading: action.meta.loading,
-        error: action.payload
+        error: action.payload.error,
+        loading: action.meta["loading"]
       };
-    default:
-      return state;
-  }
-};
+    }
+  );
 
 export default reducer;

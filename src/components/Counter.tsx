@@ -10,10 +10,10 @@ interface IProps {
 
 export const Counter: React.SFC<IProps> = (props: IProps) => {
   const incrementClickHandler = () => {
-    props.actions(counterActions.postIncrementRequest());
+    props.actions(counterActions.postIncrementRequest({}));
   };
   const decrementClickHandler = () => {
-    props.actions(counterActions.postDecrementRequest());
+    props.actions(counterActions.postDecrementRequest({}));
   };
 
   return (
