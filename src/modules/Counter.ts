@@ -1,42 +1,20 @@
-import { Action } from "redux-actions";
+import actionCreatorFactory, { Action } from "typescript-fsa";
+import { reducerWithInitialState } from "typescript-fsa-reducers";
 
-enum ActionType {
-  post_increment_request = "POST_INCREMENT_REQUEST",
-  post_decrement_request = "POST_DECREMENT_REQUEST",
-  increment = "INCREMENT",
-  decrement = "DECREMENT"
-}
+export interface ICounterActionPayload {}
 
-export type CounterAction = Action<{}> | Action<{}>;
+export type CounterAction = Action<ICounterActionPayload>;
 
-const postIncrementRequest = (): CounterAction => {
-  return {
-    type: ActionType.post_increment_request,
-    payload: {},
-    error: false
-  };
-};
-const postDecrementRequest = (): CounterAction => {
-  return {
-    type: ActionType.post_decrement_request,
-    payload: {},
-    error: false
-  };
-};
-const increment = (): CounterAction => {
-  return {
-    type: ActionType.increment,
-    payload: {},
-    error: false
-  };
-};
-const decrement = (): CounterAction => {
-  return {
-    type: ActionType.decrement,
-    payload: {},
-    error: false
-  };
-};
+const actionCreator = actionCreatorFactory();
+
+const postIncrementRequest = actionCreator<ICounterActionPayload>(
+  "POST_INCREMENT_REQUEST"
+);
+const postDecrementRequest = actionCreator<ICounterActionPayload>(
+  "POST_DECREMENT_REQUEST"
+);
+const increment = actionCreator<ICounterActionPayload>("INCREMENT");
+const decrement = actionCreator<ICounterActionPayload>("DECREMENT");
 
 export const counterActions = {
   increment,
@@ -53,24 +31,14 @@ const initialState: ICounterState = {
   count: 0
 };
 
-export const reducer = (
-  state: ICounterState = initialState,
-  action: CounterAction
-): ICounterState => {
-  switch (action.type) {
-    case ActionType.increment:
-      return {
-        ...state,
-        count: state.count + 1
-      };
-    case ActionType.decrement:
-      return {
-        ...state,
-        count: state.count - 1
-      };
-    default:
-      return state;
-  }
-};
+export const reducer = reducerWithInitialState(initialState)
+  .case(increment, state => ({
+    ...state,
+    count: state.count + 1
+  }))
+  .case(decrement, state => ({
+    ...state,
+    count: state.count - 1
+  }));
 
 export default reducer;
