@@ -9,13 +9,13 @@ const sleep = microSecond =>
 function* asyncIncrement(action: CounterAction) {
   console.log(action);
   yield call(sleep, 500);
-  yield put(counterActions.increment());
+  yield put(counterActions.increment({}));
 }
 
 function* asyncDecrement(action: CounterAction) {
   console.log(action);
   yield sleep(500);
-  yield put(counterActions.decrement());
+  yield put(counterActions.decrement({}));
 }
 
 function* fetchQiitaUser(action: QiitaAction) {

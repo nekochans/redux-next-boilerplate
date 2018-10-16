@@ -1,4 +1,4 @@
-import actionCreatorFactory, { Action } from "typescript-fsa";
+import actionCreatorFactory, { Action, ActionCreator } from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 export interface ICounterActionPayload {}
@@ -16,7 +16,14 @@ const postDecrementRequest = actionCreator<ICounterActionPayload>(
 const increment = actionCreator<ICounterActionPayload>("INCREMENT");
 const decrement = actionCreator<ICounterActionPayload>("DECREMENT");
 
-export const counterActions = {
+interface ICounterActions {
+  increment: ActionCreator<ICounterActionPayload>;
+  decrement: ActionCreator<ICounterActionPayload>;
+  postIncrementRequest: ActionCreator<ICounterActionPayload>;
+  postDecrementRequest: ActionCreator<ICounterActionPayload>;
+}
+
+export const counterActions: ICounterActions = {
   increment,
   decrement,
   postIncrementRequest,
