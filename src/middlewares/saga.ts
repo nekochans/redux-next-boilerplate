@@ -4,7 +4,7 @@ import {
   counterActions,
   CounterActionType
 } from "../modules/Counter";
-import { QiitaAction, qiitaActions } from "../modules/Qiita";
+import { QiitaAction, qiitaActions, QiitaActionType } from "../modules/Qiita";
 import { fetchUser } from "../domain/Qiita";
 
 const sleep = microSecond =>
@@ -32,10 +32,9 @@ function* fetchQiitaUser(action: QiitaAction) {
 }
 
 function* rootSaga() {
-  // TODO ActionTypeはエクスポートして使えるようにしたほうが良い
   yield takeLatest(CounterActionType.post_increment_request, asyncIncrement);
   yield takeLatest(CounterActionType.post_decrement_request, asyncDecrement);
-  yield takeLatest("POST_FETCH_USER_REQUEST", fetchQiitaUser);
+  yield takeLatest(QiitaActionType.post_fetch_user_request, fetchQiitaUser);
 }
 
 export default rootSaga;
