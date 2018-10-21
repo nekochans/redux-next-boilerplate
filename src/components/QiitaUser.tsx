@@ -9,7 +9,7 @@ const QiitaUser: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
       <p>{props.value.user.id}</p>
-      <img src={props.value.user["profile_image_url"]} />
+      <img src={props.value.user.profile_image_url} />
     </>
   );
 };

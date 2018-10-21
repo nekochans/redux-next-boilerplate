@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
-import Qiita from "../components/Qiita";
+import QiitaUserForm from "../components/QiitaUserForm";
 import { IReduxState, ReduxAction } from "../store";
 import { IQiitaState } from "../modules/Qiita";
 
@@ -24,4 +24,4 @@ const mapDispatchToProps: MapDispatchToProps<
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Qiita);
+)(QiitaUserForm);

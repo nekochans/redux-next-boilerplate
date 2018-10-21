@@ -4,14 +4,23 @@ import { IQiitaState, qiitaActions } from "../modules/Qiita";
 import { Dispatch } from "redux";
 import QiitaContainer from "../containers/Qiita";
 import { NextContext } from "next";
+import { compose, setStatic, pure } from "recompose";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: IQiitaState;
 }
 
-export default class Qiita extends React.Component<IProps> {
-  static async getInitialProps(ctx: NextContext) {
+const QiitaPage: React.SFC<IProps> = (props: IProps) => {
+  return (
+    <>
+      <QiitaContainer value={props.value} actions={props.actions} />
+    </>
+  );
+};
+
+const enhancer = compose(
+  setStatic("getInitialProps", async (ctx: NextContext) => {
     const { err, isServer } = ctx;
     if (err != null) {
       // TODO 何らかのError処理を行う
@@ -26,13 +35,8 @@ export default class Qiita extends React.Component<IProps> {
     };
 
     ctx.store.dispatch(qiitaActions.postFetchUserRequest(request));
-  }
+  }),
+  pure
+);
 
-  render() {
-    return (
-      <>
-        <QiitaContainer value={this.props.value} actions={this.props.actions} />
-      </>
-    );
-  }
-}
+export default enhancer(QiitaPage);
