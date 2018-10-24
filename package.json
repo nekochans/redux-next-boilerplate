@@ -7,7 +7,7 @@
     "test:coverage": "jest --config=jest.config.json --collectCoverage=true",
     "dev": "yarn run build && concurrently \"tsc -p tsconfig.server.json -w\" \"node dist/server/index.js\"",
     "build": "rm -rf src/.next && tsc -p tsconfig.server.json && next build src",
-    "start": "next start src",
+    "start": "yarn run build && NODE_ENV=production node dist/server/index.js",
     "tslint": "tslint --project tsconfig.json --config tslint.json 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "format": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'"
