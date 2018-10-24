@@ -60,6 +60,9 @@ typings/
 # next.js build output
 .next
 
+# CustomServer build output
+dist
+
 # IDEA setting file
 .idea
 redux-next-boilerplate.iml

@@ -37,6 +37,9 @@
       "esnext.asynciterable"
     ]
   },
+  "include": [
+    "src/server/index.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
