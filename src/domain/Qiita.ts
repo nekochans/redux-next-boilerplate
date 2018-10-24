@@ -1,5 +1,4 @@
-// TODO APIサーバへ通信する場所はここではないどこかへ移動させる
-import axios, { AxiosResponse, AxiosError } from "axios";
+import { requestToQiitaUserApi } from "../api/QiitaApi";
 
 export interface IFetchQiitaUserRequest {
   id: string;
@@ -18,14 +17,5 @@ export interface IFetchQiitaUserFailureResponse {
 export const fetchUser = async (
   request: IFetchQiitaUserRequest
 ): Promise<IFetchQiitaUserResponse> => {
-  return axios
-    .get<IFetchQiitaUserResponse>(
-      `https://qiita.com/api/v2/users/${request.id}`
-    )
-    .then((axiosResponse: AxiosResponse) => {
-      return Promise.resolve(axiosResponse.data);
-    })
-    .catch((axiosError: AxiosError) => {
-      return Promise.reject(axiosError);
-    });
+  return await requestToQiitaUserApi(request);
 };
