@@ -19,7 +19,7 @@ const QiitaPage: React.SFC<IProps> = (props: IProps) => {
   );
 };
 
-const enhancer = compose(
+const enhance = compose(
   setStatic("getInitialProps", async (ctx: NextContext) => {
     const { err, isServer } = ctx;
     if (err != null) {
@@ -45,4 +45,4 @@ const enhancer = compose(
   pure
 );
 
-export default enhancer(QiitaPage);
+export default enhance(QiitaPage);

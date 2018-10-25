@@ -23,7 +23,7 @@ const IndexPage: React.SFC = () => {
   );
 };
 
-const enhancer = compose(
+const enhance = compose(
   setStatic("getInitialProps", async (ctx: NextContext) => {
     const { err } = ctx;
     if (err != null) {
@@ -37,4 +37,4 @@ const enhancer = compose(
   pure
 );
 
-export default enhancer(IndexPage);
+export default enhance(IndexPage);
