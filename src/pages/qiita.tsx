@@ -19,15 +19,19 @@ const QiitaPage: React.SFC<IProps> = (props: IProps) => {
   );
 };
 
-const enhancer = compose(
+const enhance = compose(
   setStatic("getInitialProps", async (ctx: NextContext) => {
     const { err, isServer } = ctx;
     if (err != null) {
       // TODO 何らかのError処理を行う
     }
 
+    const pageProps = {
+      title: "🐱Qiita ユーザー検索🐱"
+    };
+
     if (!isServer) {
-      return;
+      return pageProps;
     }
 
     const request = {
@@ -35,8 +39,10 @@ const enhancer = compose(
     };
 
     ctx.store.dispatch(qiitaActions.postFetchUserRequest(request));
+
+    return pageProps;
   }),
   pure
 );
 
-export default enhancer(QiitaPage);
+export default enhance(QiitaPage);
