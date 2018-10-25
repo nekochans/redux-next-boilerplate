@@ -26,8 +26,12 @@ const enhancer = compose(
       // TODO 何らかのError処理を行う
     }
 
+    const pageProps = {
+      title: "🐱Qiita ユーザー検索🐱"
+    };
+
     if (!isServer) {
-      return;
+      return pageProps;
     }
 
     const request = {
@@ -35,6 +39,8 @@ const enhancer = compose(
     };
 
     ctx.store.dispatch(qiitaActions.postFetchUserRequest(request));
+
+    return pageProps;
   }),
   pure
 );
