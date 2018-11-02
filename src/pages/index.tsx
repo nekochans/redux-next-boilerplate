@@ -2,11 +2,12 @@ import React from "react";
 import { NextContext } from "next";
 import Link from "next/link";
 import { compose, pure, setStatic } from "recompose";
+import Title from "../components/Title";
 
 const IndexPage: React.SFC = () => {
   return (
     <>
-      <h1>🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱</h1>
+      <Title title="🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱" />
       <ul>
         <li>
           <Link href="/counter">

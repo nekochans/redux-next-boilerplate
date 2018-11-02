@@ -10,7 +10,9 @@
     "start": "yarn run build && NODE_ENV=production node dist/server/index.js",
     "tslint": "tslint --project tsconfig.json --config tslint.json 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
-    "format": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'"
+    "format:ts": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "format:css": "prettier-stylelint --write",
+    "format": "yarn run format:ts && yarn run format:css"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
   "homepage": "https://github.com/nekochans/redux-next-boilerplate#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bulma": "^0.7.2",
     "express": "^4.16.3",
     "next": "^7.0.0",
     "next-redux-saga": "^3.0.0-beta.1",
@@ -36,6 +39,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
+    "styled-components": "^4.0.3",
     "typescript-fsa": "^3.0.0-beta-2",
     "typescript-fsa-reducers": "^1.0.0",
     "universal-cookie": "^3.0.0"
@@ -49,10 +53,19 @@
     "@types/react-redux": "^6.0.6",
     "@types/recompose": "^0.27.0",
     "@types/redux-logger": "^3.0.6",
+    "@types/styled-components": "^4.0.3",
+    "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.0",
+    "babel-plugin-styled-components": "^1.8.0",
     "concurrently": "^4.0.1",
     "jest": "^23.6.0",
+    "node-sass": "^4.9.4",
     "prettier": "^1.14.3",
+    "prettier-stylelint": "^0.4.2",
+    "stylelint": "^9.7.1",
+    "stylelint-config-idiomatic-order": "^6.1.0",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-scss": "^3.3.2",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.10.0",
