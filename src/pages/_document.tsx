@@ -5,18 +5,21 @@ import Document, {
   NextDocumentContext,
   NextScript
 } from "next/document";
+import { ServerStyleSheet } from "styled-components";
 import { AppComponentProps } from "next/app";
-import { Store } from "redux";
-import { IReduxState } from "../store";
 
 interface IProps extends AppComponentProps {
-  store: Store<IReduxState>;
+  styleTags: React.ReactElement<{}>[];
 }
 
 export default class MyDocument extends Document<IProps> {
   static async getInitialProps(ctx: NextDocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    const sheet = new ServerStyleSheet();
+    const page = ctx.renderPage(App => props =>
+      sheet.collectStyles(<App {...props} />)
+    );
+    const styleTags = sheet.getStyleElement();
+    return { ...page, styleTags };
   }
 
   render() {
@@ -25,6 +28,7 @@ export default class MyDocument extends Document<IProps> {
         <Head>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          {this.props.styleTags}
         </Head>
         <body>
           <Main />
