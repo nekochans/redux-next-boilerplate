@@ -2,11 +2,16 @@ import React from "react";
 import { NextContext } from "next";
 import Link from "next/link";
 import { compose, pure, setStatic } from "recompose";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  color: red;
+`;
 
 const IndexPage: React.SFC = () => {
   return (
     <>
-      <h1>🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱</h1>
+      <Title>🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱</Title>
       <ul>
         <li>
           <Link href="/counter">
