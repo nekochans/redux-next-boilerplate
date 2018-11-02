@@ -10,7 +10,9 @@
     "start": "yarn run build && NODE_ENV=production node dist/server/index.js",
     "tslint": "tslint --project tsconfig.json --config tslint.json 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
-    "format": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'"
+    "format:ts": "tslint --project tsconfig.json --config tslint.json --fix 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "format:css": "prettier-stylelint --write",
+    "format": "yarn run format:ts && yarn run format:css"
   },
   "repository": {
     "type": "git",
@@ -59,6 +61,11 @@
     "jest": "^23.6.0",
     "node-sass": "^4.9.4",
     "prettier": "^1.14.3",
+    "prettier-stylelint": "^0.4.2",
+    "stylelint": "^9.7.1",
+    "stylelint-config-idiomatic-order": "^6.1.0",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-scss": "^3.3.2",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.10.0",
