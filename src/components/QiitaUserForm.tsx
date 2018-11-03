@@ -29,7 +29,7 @@ const QiitaUserForm: React.SFC<IProps> = (props: IProps) => {
   );
 };
 
-const enhancer = compose(
+const enhance = compose(
   withState("userId", "updateUserId", ""),
   withHandlers({
     handleChange: (props: IProps) => (
@@ -45,4 +45,4 @@ const enhancer = compose(
   pure
 );
 
-export default enhancer(QiitaUserForm);
+export default enhance(QiitaUserForm);
