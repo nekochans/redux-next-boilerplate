@@ -4,10 +4,13 @@ import { Dispatch } from "redux";
 import { ReduxAction } from "../store";
 import styled from "styled-components";
 import "../styles/style.scss";
+import { compose, withHandlers, pure } from "recompose";
 
 interface IProps {
   value: ICounterState;
   actions: Dispatch<ReduxAction>;
+  incrementClickHandler: () => {};
+  decrementClickHandler: () => {};
 }
 
 const CountResult = styled("div").attrs({ className: "content" })`
@@ -21,24 +24,29 @@ const DecrementButton = styled("button").attrs({
 })``;
 
 export const Counter: React.SFC<IProps> = (props: IProps) => {
-  const incrementClickHandler = () => {
-    props.actions(counterActions.postIncrementRequest({}));
-  };
-  const decrementClickHandler = () => {
-    props.actions(counterActions.postDecrementRequest({}));
-  };
-
   return (
     <>
       <CountResult>🐱 {props.value.count} 🐱</CountResult>
-      <IncrementButton onClick={incrementClickHandler}>
+      <IncrementButton onClick={props.incrementClickHandler}>
         increment
       </IncrementButton>
-      <DecrementButton onClick={decrementClickHandler}>
+      <DecrementButton onClick={props.decrementClickHandler}>
         decrement
       </DecrementButton>
     </>
   );
 };
 
-export default Counter;
+const enhance = compose(
+  withHandlers({
+    incrementClickHandler: (props: IProps) => () => {
+      props.actions(counterActions.postIncrementRequest({}));
+    },
+    decrementClickHandler: (props: IProps) => () => {
+      props.actions(counterActions.postDecrementRequest({}));
+    }
+  }),
+  pure
+);
+
+export default enhance(Counter);
