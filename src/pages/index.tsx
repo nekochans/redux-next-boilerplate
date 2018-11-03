@@ -1,25 +1,16 @@
 import React from "react";
 import { NextContext } from "next";
-import Link from "next/link";
 import { compose, pure, setStatic } from "recompose";
 import Title from "../components/Title";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const IndexPage: React.SFC = () => {
   return (
     <>
-      <Title title="🐱(=^・^=)🐱(=^・^=)🐱(=^・^=)🐱" />
-      <ul>
-        <li>
-          <Link href="/counter">
-            <a>counter</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/qiita">
-            <a>qiita</a>
-          </Link>
-        </li>
-      </ul>
+      <Navbar />
+      <Title title="🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱" />
+      <Footer />
     </>
   );
 };
