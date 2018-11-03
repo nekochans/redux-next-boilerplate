@@ -5,6 +5,8 @@ import { Dispatch } from "redux";
 import { ReduxAction } from "../store";
 import { compose, pure, setStatic } from "recompose";
 import { NextContext } from "next";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
@@ -14,7 +16,9 @@ interface IProps {
 export const CounterPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
+      <Navbar />
       <CounterContainer actions={props.actions} value={props.value} />
+      <Footer />
     </>
   );
 };
