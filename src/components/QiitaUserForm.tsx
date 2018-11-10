@@ -18,11 +18,25 @@ const QiitaUserForm: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
       <form method="post" onSubmit={props.handleSubmit}>
-        <label>userId: </label>
-        <input type="text" name="id" onChange={props.handleChange} />
-        <button type="submit" value="Submit">
-          送信
-        </button>
+        <div className="field">
+          <label className="label">userId</label>
+          <div className="control">
+            <input
+              name="id"
+              className="input"
+              type="text"
+              placeholder="QiitaのユーザーIDを入れて下さい"
+              onChange={props.handleChange}
+            />
+          </div>
+        </div>
+        <div className="field is-grouped">
+          <div className="control">
+            <button type="submit" className="button is-link">
+              Submit
+            </button>
+          </div>
+        </div>
       </form>
       {props.value.user ? <QiitaUser value={props.value} /> : ""}
     </>
