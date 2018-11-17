@@ -3,7 +3,11 @@ import cookieParser from "cookie-parser";
 import next from "next";
 import { requestToQiitaUserApi } from "../api/QiitaApi";
 import { AxiosError } from "axios";
-import { createAuthorizationState, createAuthorizationUrl } from "./auth";
+import {
+  createAuthorizationState,
+  createAuthorizationUrl,
+  issueAccessToken
+} from "./auth";
 
 const app = (next: next.Server): express.Express => {
   const app = express();
@@ -43,17 +47,32 @@ const app = (next: next.Server): express.Express => {
   });
 
   // Qiitaの認可サーバーからのコールバック
-  app.get("/oauth/callback", (req: express.Request, res: express.Response) => {
-    if (req.cookies.authorizationState == null) {
-      // TODO 何らかのエラー処理を行う
-    }
+  app.get(
+    "/oauth/callback",
+    async (req: express.Request, res: express.Response) => {
+      if (req.cookies.authorizationState == null) {
+        // TODO 何らかのエラー処理を行う
+      }
 
-    if (req.cookies.authorizationState !== req.query.state) {
-      // TODO stateが一致しない場合は何らかのエラー処理を行う
-    }
+      if (req.cookies.authorizationState !== req.query.state) {
+        // TODO stateが一致しない場合は何らかのエラー処理を行う
+      }
 
-    return res.json({ query: req.query });
-  });
+      if (req.query.code == null) {
+        // TODO 認可コードが含まれない場合は何らかのエラー処理を行う
+      }
+
+      await issueAccessToken(req.query.code)
+        .then(tokenResponse => {
+          return res.json({ access_token: tokenResponse.token });
+        })
+        .catch(error => {
+          return res
+            .status(error.response.status)
+            .json({ message: error.response.data.message });
+        });
+    }
+  );
 
   // SPA のデフォルトルーティング
   app.get("*", (req: express.Request, res: express.Response) => {
