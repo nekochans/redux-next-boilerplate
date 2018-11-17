@@ -39,7 +39,7 @@ const app = (next: next.Server): express.Express => {
     const authorizationState = createAuthorizationState();
     res.cookie("authorizationState", authorizationState);
 
-    return res.redirect(301, createAuthorizationUrl(authorizationState));
+    return res.redirect(302, createAuthorizationUrl(authorizationState));
   });
 
   // Qiitaの認可サーバーからのコールバック
