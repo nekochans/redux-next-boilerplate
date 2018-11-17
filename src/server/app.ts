@@ -64,6 +64,7 @@ const app = (next: next.Server): express.Express => {
 
       await issueAccessToken(req.query.code)
         .then(tokenResponse => {
+          res.cookie("accessToken", tokenResponse.token);
           return res.json({ access_token: tokenResponse.token });
         })
         .catch(error => {
