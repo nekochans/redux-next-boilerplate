@@ -1,16 +1,19 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import next from "next";
 import { requestToQiitaUserApi } from "../api/QiitaApi";
 import { AxiosError } from "axios";
 import {
+  createAuthorizationState,
   createAuthorizationUrl,
-  fetchAuthorizationStateFromStorage
+  issueAccessToken
 } from "./auth";
 
 const app = (next: next.Server): express.Express => {
   const app = express();
   const handle = next.getRequestHandler();
   app.enable("strict routing");
+  app.use(cookieParser());
 
   // Qiita User APIへのアクセス
   app.get(
@@ -37,15 +40,40 @@ const app = (next: next.Server): express.Express => {
       // TODO 接続先のホスト名がアプリケーションのホスト名と一致しない場合はエラーにする
     }
 
-    return res.redirect(301, createAuthorizationUrl());
+    const authorizationState = createAuthorizationState();
+    res.cookie("authorizationState", authorizationState);
+
+    return res.redirect(302, createAuthorizationUrl(authorizationState));
   });
 
   // Qiitaの認可サーバーからのコールバック
-  app.get("/oauth/callback", (req: express.Request, res: express.Response) => {
-    // TODO 後でアクセストークンを取得するように改修する
-    console.log(fetchAuthorizationStateFromStorage());
-    return res.json({ query: req.query });
-  });
+  app.get(
+    "/oauth/callback",
+    async (req: express.Request, res: express.Response) => {
+      if (req.cookies.authorizationState == null) {
+        // TODO 何らかのエラー処理を行う
+      }
+
+      if (req.cookies.authorizationState !== req.query.state) {
+        // TODO stateが一致しない場合は何らかのエラー処理を行う
+      }
+
+      if (req.query.code == null) {
+        // TODO 認可コードが含まれない場合は何らかのエラー処理を行う
+      }
+
+      await issueAccessToken(req.query.code)
+        .then(tokenResponse => {
+          res.cookie("accessToken", tokenResponse.token);
+          return res.json({ access_token: tokenResponse.token });
+        })
+        .catch(error => {
+          return res
+            .status(error.response.status)
+            .json({ message: error.response.data.message });
+        });
+    }
+  );
 
   // SPA のデフォルトルーティング
   app.get("*", (req: express.Request, res: express.Response) => {
