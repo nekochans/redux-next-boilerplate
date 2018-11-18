@@ -76,10 +76,6 @@ const app = (next: next.Server): express.Express => {
 
   // Qiitaの認可サーバーへリクエスト
   app.get("/oauth/request", (req: express.Request, res: express.Response) => {
-    if (req.hostname !== "localhost") {
-      // TODO 接続先のホスト名がアプリケーションのホスト名と一致しない場合はエラーにする
-    }
-
     const authorizationState = createAuthorizationState();
     res.cookie("authorizationState", authorizationState);
 

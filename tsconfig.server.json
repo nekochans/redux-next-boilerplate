@@ -11,8 +11,6 @@
     "strict": true,
     // 未使用のローカル変数は禁止
     "noUnusedLocals": true,
-    // 未使用のパラメーターは禁止
-    "noUnusedParameters": true,
     // 不正確なreturnをエラー報告します
     "noImplicitReturns": true,
     // case 文 のフォールスルーを禁止
