@@ -1,7 +1,12 @@
 import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import next from "next";
-import { requestToQiitaUserApi } from "../api/QiitaApi";
+import {
+  requestToQiitaUserApi,
+  requestToAuthenticatedQiitaUserApi
+} from "./api/QiitaApi";
 import { AxiosError } from "axios";
 import {
   createAuthorizationState,
@@ -13,7 +18,40 @@ const app = (next: next.Server): express.Express => {
   const app = express();
   const handle = next.getRequestHandler();
   app.enable("strict routing");
+  app.use(
+    cors({
+      origin: ["*"],
+      methods: ["GET", "POST", "OPTIONS"],
+      credentials: true
+    })
+  );
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
+
+  // /api/v2/authenticated_user へのアクセス
+  // アクセストークンに紐付いたQiitaユーザー情報を返す
+  app.post(
+    "/api/qiita/authenticated_users",
+    async (req: express.Request, res: express.Response): Promise<any> => {
+      const accessToken = req.body.accessToken;
+      if (accessToken == null) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      await requestToAuthenticatedQiitaUserApi({ accessToken })
+        .then(authenticatedQiitaUserResponse => {
+          return res.status(200).json(authenticatedQiitaUserResponse);
+        })
+        .catch((error: AxiosError) => {
+          if (error.response === undefined) {
+            return res.status(500).json({ message: "Internal Server Error" });
+          }
+
+          return res.status(error.response.status).json(error.response.data);
+        });
+    }
+  );
 
   // Qiita User APIへのアクセス
   app.get(
@@ -64,7 +102,10 @@ const app = (next: next.Server): express.Express => {
 
       await issueAccessToken(req.query.code)
         .then(tokenResponse => {
-          res.cookie("accessToken", tokenResponse.token);
+          res.cookie("accessToken", tokenResponse.token, {
+            path: "/",
+            httpOnly: true
+          });
           return res.json({ access_token: tokenResponse.token });
         })
         .catch(error => {

@@ -6,9 +6,14 @@ describe("src/modules/My", () => {
       loading: false
     };
 
+    const params = {
+      accessToken:
+        "ea5d0a593b2655e9568f144fb1826342292f5c6b7d406fda00577b8d1530d8a5"
+    };
+
     const newState = reducer(
       state,
-      myActions.postFetchAuthenticatedUserRequest()
+      myActions.postFetchAuthenticatedUserRequest(params)
     );
 
     expect(newState.loading).toBe(true);

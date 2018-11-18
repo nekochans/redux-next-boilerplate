@@ -1,5 +1,6 @@
 import actionCreatorFactory, { Action, ActionCreator } from "typescript-fsa";
 import {
+  IFetchAuthenticatedQiitaUserRequest,
   IFetchAuthenticatedQiitaUserFailureResponse,
   IFetchAuthenticatedQiitaUserResponse
 } from "../domain/Qiita";
@@ -18,15 +19,13 @@ export interface IMeta {
 const actionCreator = actionCreatorFactory();
 
 export type MyAction =
-  | Action<undefined>
+  | Action<IFetchAuthenticatedQiitaUserRequest>
   | Action<IFetchAuthenticatedQiitaUserResponse>
   | Action<IFetchAuthenticatedQiitaUserFailureResponse>;
 
-const postFetchAuthenticatedUserRequest = actionCreator<undefined>(
-  MyActionType.post_fetch_authenticated_user_request,
-  { loading: true },
-  false
-);
+const postFetchAuthenticatedUserRequest = actionCreator<
+  IFetchAuthenticatedQiitaUserRequest
+>(MyActionType.post_fetch_authenticated_user_request, { loading: true }, false);
 
 const fetchAuthenticatedUserSuccess = actionCreator<
   IFetchAuthenticatedQiitaUserResponse
@@ -37,7 +36,9 @@ const fetchAuthenticatedUserFailure = actionCreator<
 >(MyActionType.fetch_authenticated_user_failure, { loading: false }, true);
 
 interface IMyActions {
-  postFetchAuthenticatedUserRequest: ActionCreator<undefined>;
+  postFetchAuthenticatedUserRequest: ActionCreator<
+    IFetchAuthenticatedQiitaUserRequest
+  >;
   fetchAuthenticatedUserSuccess: ActionCreator<
     IFetchAuthenticatedQiitaUserResponse
   >;
