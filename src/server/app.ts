@@ -104,7 +104,8 @@ const app = (next: next.Server): express.Express => {
             path: "/",
             httpOnly: true
           });
-          return res.json({ access_token: tokenResponse.token });
+
+          return res.status(302).redirect(`${appUrl()}/my`);
         })
         .catch(error => {
           return res
