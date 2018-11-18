@@ -1,17 +1,18 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
+  IFetchAuthenticatedQiitaUserRequest,
   IFetchQiitaUserRequest,
   IFetchQiitaUserResponse,
-  IFetchAuthenticatedQiitaUserRequest,
   IFetchAuthenticatedQiitaUserResponse
-} from "../domain/Qiita";
-import { appUrl } from "../constants/appEnv";
+} from "../../domain/Qiita";
 
 export const requestToQiitaUserApi = async (
   request: IFetchQiitaUserRequest
 ): Promise<IFetchQiitaUserResponse> => {
   return axios
-    .get<IFetchQiitaUserResponse>(`${appUrl()}/api/qiita/users/${request.id}`)
+    .get<IFetchQiitaUserResponse>(
+      `https://qiita.com/api/v2/users/${request.id}`
+    )
     .then((axiosResponse: AxiosResponse) => {
       return Promise.resolve(axiosResponse.data);
     })
@@ -24,9 +25,9 @@ export const requestToAuthenticatedQiitaUserApi = async (
   request: IFetchAuthenticatedQiitaUserRequest
 ): Promise<IFetchAuthenticatedQiitaUserResponse> => {
   return axios
-    .post<IFetchAuthenticatedQiitaUserResponse>(
-      `${appUrl()}/api/qiita/authenticated_users`,
-      request
+    .get<IFetchAuthenticatedQiitaUserResponse>(
+      "https://qiita.com/api/v2/authenticated_user",
+      { headers: { Authorization: `Bearer ${request.accessToken}` } }
     )
     .then((axiosResponse: AxiosResponse) => {
       return Promise.resolve(axiosResponse.data);

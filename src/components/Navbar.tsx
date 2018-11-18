@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/style.scss";
 import Link from "next/link";
 import LoginButton from "./LoginButton";
+import MyPageButton from "./MyPageButton";
 
 // TODO ログイン状態によってログインボタンの表示・非表示を切り替える
 export default () => {
@@ -28,6 +29,7 @@ export default () => {
               <a className="button is-light">Qiita</a>
             </Link>
             <LoginButton />
+            <MyPageButton />
           </div>
         </div>
       </div>
