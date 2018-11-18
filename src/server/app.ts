@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import next from "next";
 import {
@@ -25,6 +26,7 @@ const app = (next: next.Server): express.Express => {
       methods: ["GET", "POST", "OPTIONS"]
     })
   );
+  app.use(helmet());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
