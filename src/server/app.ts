@@ -13,6 +13,7 @@ import {
   createAuthorizationUrl,
   issueAccessToken
 } from "./auth";
+import { appUrl } from "../constants/appEnv";
 
 const app = (next: next.Server): express.Express => {
   const app = express();
@@ -20,9 +21,8 @@ const app = (next: next.Server): express.Express => {
   app.enable("strict routing");
   app.use(
     cors({
-      origin: ["*"],
-      methods: ["GET", "POST", "OPTIONS"],
-      credentials: true
+      origin: [appUrl()],
+      methods: ["GET", "POST", "OPTIONS"]
     })
   );
   app.use(bodyParser.json());
