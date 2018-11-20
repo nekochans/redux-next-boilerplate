@@ -7,6 +7,7 @@ import { Dispatch } from "redux";
 import { ReduxAction } from "../store";
 import { IMyState, myActions } from "../modules/My";
 import { NextContext } from "next";
+import { fetchFromCookie } from "../infrastructure/cookie";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
@@ -30,9 +31,8 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
-    const accessToken = ctx.req["cookies"].accessToken;
+    const accessToken = fetchFromCookie(ctx, "accessToken");
     if (accessToken == null) {
-      // TODO 何らかのError処理を行う
     }
 
     const pageProps = {
