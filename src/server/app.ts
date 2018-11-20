@@ -101,8 +101,7 @@ const app = (next: next.Server): express.Express => {
       await issueAccessToken(req.query.code)
         .then(tokenResponse => {
           res.cookie("accessToken", tokenResponse.token, {
-            path: "/",
-            httpOnly: true
+            path: "/"
           });
 
           return res.status(302).redirect(`${appUrl()}/my`);

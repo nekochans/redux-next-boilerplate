@@ -7,16 +7,18 @@ import { compose, pure, setStatic } from "recompose";
 import { NextContext } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { fetchFromCookie } from "../infrastructure/cookie";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: ICounterState;
+  isLoggedIn: boolean;
 }
 
 export const CounterPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar />
+      <Navbar {...props} />
       <CounterContainer actions={props.actions} value={props.value} />
       <Footer />
     </>
@@ -30,8 +32,12 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
+    const accessToken = fetchFromCookie(ctx, "accessToken");
+    const isLoggedIn = accessToken != null;
+
     return {
-      title: "🐱カウンター🐱"
+      title: "🐱カウンター🐱",
+      isLoggedIn
     };
   }),
   pure
