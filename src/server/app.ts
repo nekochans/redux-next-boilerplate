@@ -77,7 +77,10 @@ const app = (next: next.Server): express.Express => {
   // Qiitaの認可サーバーへリクエスト
   app.get("/oauth/request", (req: express.Request, res: express.Response) => {
     const authorizationState = createAuthorizationState();
-    res.cookie("authorizationState", authorizationState);
+    res.cookie("authorizationState", authorizationState, {
+      path: "/",
+      httpOnly: true
+    });
 
     return res.redirect(302, createAuthorizationUrl(authorizationState));
   });
