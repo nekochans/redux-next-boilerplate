@@ -4,11 +4,16 @@ import { compose, pure, setStatic } from "recompose";
 import Title from "../components/Title";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { fetchFromCookie } from "../infrastructure/cookie";
 
-const IndexPage: React.SFC = () => {
+interface IProps {
+  isLoggedIn: boolean;
+}
+
+const IndexPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar />
+      <Navbar {...props} />
       <Title title="🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱" />
       <Footer />
     </>
@@ -22,8 +27,12 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
+    const accessToken = fetchFromCookie(ctx, "accessToken");
+    const isLoggedIn = accessToken != null;
+
     return {
-      title: "🐱ホーム画面🐱"
+      title: "🐱ホーム画面🐱",
+      isLoggedIn
     };
   }),
   pure

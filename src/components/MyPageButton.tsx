@@ -1,11 +1,14 @@
 import React from "react";
+import Link from "next/link";
 
 const MyPageButton: React.SFC<{}> = () => {
   return (
     <>
-      <a className="button is-primary" href="/my">
-        <strong>MyPage</strong>
-      </a>
+      <Link href="/my">
+        <a className="button is-primary">
+          <strong>MyPage</strong>
+        </a>
+      </Link>
     </>
   );
 };

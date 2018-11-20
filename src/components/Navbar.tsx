@@ -4,8 +4,11 @@ import Link from "next/link";
 import LoginButton from "./LoginButton";
 import MyPageButton from "./MyPageButton";
 
-// TODO ログイン状態によってログインボタンの表示・非表示を切り替える
-export default () => {
+interface IProps {
+  isLoggedIn: boolean;
+}
+
+export default (props: IProps) => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -28,8 +31,7 @@ export default () => {
             <Link href="/qiita">
               <a className="button is-light">Qiita</a>
             </Link>
-            <LoginButton />
-            <MyPageButton />
+            {props.isLoggedIn ? <MyPageButton /> : <LoginButton />}
           </div>
         </div>
       </div>

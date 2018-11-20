@@ -7,17 +7,24 @@ import { Dispatch } from "redux";
 import { ReduxAction } from "../store";
 import { IMyState, myActions } from "../modules/My";
 import { NextContext } from "next";
+import { fetchFromCookie } from "../infrastructure/cookie";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: IMyState;
+  title: string;
+  isLoggedIn: boolean;
 }
 
 const MyPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar />
-      <MyContainer value={props.value} actions={props.actions} />
+      <Navbar {...props} />
+      {props.isLoggedIn ? (
+        <MyContainer value={props.value} actions={props.actions} />
+      ) : (
+        <h2 className="title is-3">🐱ログインを行って下さい🐱</h2>
+      )}
       <Footer />
     </>
   );
@@ -30,13 +37,14 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
-    const accessToken = ctx.req["cookies"].accessToken;
-    if (accessToken == null) {
-      // TODO 何らかのError処理を行う
-    }
+    const accessToken = fetchFromCookie(ctx, "accessToken");
+    const isLoggedIn = accessToken != null;
 
     const pageProps = {
-      title: "🐱Myアカウント🐱"
+      actions: ctx.store.dispatch,
+      value: ctx.store.getState(),
+      title: "🐱Myアカウント🐱",
+      isLoggedIn
     };
 
     ctx.store.dispatch(

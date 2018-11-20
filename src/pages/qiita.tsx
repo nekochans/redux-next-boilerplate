@@ -7,16 +7,18 @@ import { NextContext } from "next";
 import { compose, setStatic, pure } from "recompose";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { fetchFromCookie } from "../infrastructure/cookie";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
   value: IQiitaState;
+  isLoggedIn: boolean;
 }
 
 const QiitaPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar />
+      <Navbar {...props} />
       <QiitaContainer value={props.value} actions={props.actions} />
       <Footer />
     </>
@@ -30,8 +32,12 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
+    const accessToken = fetchFromCookie(ctx, "accessToken");
+    const isLoggedIn = accessToken != null;
+
     const pageProps = {
-      title: "🐱Qiita ユーザー検索🐱"
+      title: "🐱Qiita ユーザー検索🐱",
+      isLoggedIn
     };
 
     if (!isServer) {
