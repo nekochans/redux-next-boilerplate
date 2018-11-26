@@ -4,17 +4,19 @@ import { compose, pure, setStatic } from "recompose";
 import Title from "../components/Title";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { fetchFromCookie } from "../infrastructure/cookie";
+import { rootActions } from "../modules/Root";
+import { isLoggedIn } from "../domain/Auth";
+import { IReduxState } from "../store";
 
 interface IProps {
-  isLoggedIn: boolean;
+  value: IReduxState;
 }
 
 const IndexPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar {...props} />
-      <Title title="🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱" />
+      <Navbar value={props.value} />
+      <Title title={props.value.root.title} />
       <Footer />
     </>
   );
@@ -27,13 +29,19 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
-    const accessToken = fetchFromCookie(ctx, "accessToken");
-    const isLoggedIn = accessToken != null;
-
-    return {
-      title: "🐱ホーム画面🐱",
-      isLoggedIn
+    const pageProps = {
+      title: "🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱",
+      isLoggedIn: isLoggedIn(ctx)
     };
+
+    ctx.store.dispatch(rootActions.pageTransition(pageProps));
+
+    const containerProps = {
+      actions: ctx.store.dispatch,
+      value: ctx.store.getState()
+    };
+
+    return Object.assign(pageProps, containerProps);
   }),
   pure
 );

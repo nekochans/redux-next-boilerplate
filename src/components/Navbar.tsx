@@ -3,9 +3,10 @@ import "../styles/style.scss";
 import Link from "next/link";
 import LoginButton from "./LoginButton";
 import MyPageButton from "./MyPageButton";
+import { IReduxState } from "../store";
 
 interface IProps {
-  isLoggedIn: boolean;
+  value: IReduxState;
 }
 
 export default (props: IProps) => {
@@ -31,7 +32,7 @@ export default (props: IProps) => {
             <Link href="/qiita">
               <a className="button is-light">Qiita</a>
             </Link>
-            {props.isLoggedIn ? <MyPageButton /> : <LoginButton />}
+            {props.value.root.isLoggedIn ? <MyPageButton /> : <LoginButton />}
           </div>
         </div>
       </div>

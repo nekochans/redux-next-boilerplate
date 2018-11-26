@@ -1,24 +1,24 @@
 import React from "react";
-import { ReduxAction } from "../store";
-import { IQiitaState, qiitaActions } from "../modules/Qiita";
+import { IReduxState, ReduxAction } from "../store";
+import { qiitaActions } from "../modules/Qiita";
 import { Dispatch } from "redux";
 import QiitaContainer from "../containers/Qiita";
 import { NextContext } from "next";
 import { compose, setStatic, pure } from "recompose";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { fetchFromCookie } from "../infrastructure/cookie";
+import { isLoggedIn } from "../domain/Auth";
+import { rootActions } from "../modules/Root";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
-  value: IQiitaState;
-  isLoggedIn: boolean;
+  value: IReduxState;
 }
 
 const QiitaPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar {...props} />
+      <Navbar value={props.value} />
       <QiitaContainer value={props.value} actions={props.actions} />
       <Footer />
     </>
@@ -32,16 +32,21 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
-    const accessToken = fetchFromCookie(ctx, "accessToken");
-    const isLoggedIn = accessToken != null;
-
     const pageProps = {
       title: "🐱Qiita ユーザー検索🐱",
-      isLoggedIn
+      isLoggedIn: isLoggedIn(ctx),
+      value: ctx.store.getState()
+    };
+
+    ctx.store.dispatch(rootActions.pageTransition(pageProps));
+
+    const containerProps = {
+      actions: ctx.store.dispatch,
+      value: ctx.store.getState()
     };
 
     if (!isServer) {
-      return pageProps;
+      return Object.assign(pageProps, containerProps);
     }
 
     const request = {
@@ -50,7 +55,7 @@ const enhance = compose(
 
     ctx.store.dispatch(qiitaActions.postFetchUserRequest(request));
 
-    return pageProps;
+    return Object.assign(pageProps, containerProps);
   }),
   pure
 );
