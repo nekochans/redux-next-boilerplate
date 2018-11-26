@@ -6,26 +6,29 @@ import logger from "redux-logger";
 import rootSaga from "./middlewares/saga";
 import qiita, { IQiitaState, QiitaAction } from "./modules/Qiita";
 import my, { IMyState, MyAction } from "./modules/My";
+import root, { IRootState, RootAction } from "./modules/Root";
+import initialState from "./constants/initialState";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export interface IReduxState {
+  root: IRootState;
   counter: ICounterState;
   qiita: IQiitaState;
   my: IMyState;
 }
 
-export type ReduxAction = CounterAction | QiitaAction | MyAction;
+export type ReduxAction = CounterAction | QiitaAction | MyAction | RootAction;
 
-// TODO initialState は定数的な場所で作成するように改修する
-export const configureStore = (initialState = { counter: { count: 0 } }) => {
+export const configureStore = (state = initialState) => {
   const store = createStore(
     combineReducers({
+      root,
       counter,
       qiita,
       my
     }),
-    initialState,
+    state,
     composeWithDevTools(
       applyMiddleware(sagaMiddleware),
       applyMiddleware(logger)
