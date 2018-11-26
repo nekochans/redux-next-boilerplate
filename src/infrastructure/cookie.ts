@@ -1,7 +1,11 @@
 import { NextContext } from "next";
 import Cookies from "universal-cookie";
 
-const cookies = (ctx: NextContext): Cookies => {
+export const cookies = (ctx?: NextContext): Cookies => {
+  if (ctx === undefined) {
+    return new Cookies();
+  }
+
   if (ctx.req) {
     const { cookie = {} } = ctx.req.headers;
     return new Cookies(cookie);
@@ -10,6 +14,6 @@ const cookies = (ctx: NextContext): Cookies => {
   return new Cookies();
 };
 
-export const fetchFromCookie = (ctx: NextContext, key: string): string => {
+export const fetchFromCookie = (key: string, ctx?: NextContext): string => {
   return cookies(ctx).get(key);
 };

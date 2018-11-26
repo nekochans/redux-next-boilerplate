@@ -1,24 +1,23 @@
 import React from "react";
-import { ICounterState } from "../modules/Counter";
 import CounterContainer from "../containers/Counter";
 import { Dispatch } from "redux";
-import { ReduxAction } from "../store";
+import { IReduxState, ReduxAction } from "../store";
 import { compose, pure, setStatic } from "recompose";
 import { NextContext } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { fetchFromCookie } from "../infrastructure/cookie";
+import { isLoggedIn } from "../domain/Auth";
+import { rootActions } from "../modules/Root";
 
 interface IProps {
   actions: Dispatch<ReduxAction>;
-  value: ICounterState;
-  isLoggedIn: boolean;
+  value: IReduxState;
 }
 
 export const CounterPage: React.SFC<IProps> = (props: IProps) => {
   return (
     <>
-      <Navbar {...props} />
+      <Navbar value={props.value} />
       <CounterContainer actions={props.actions} value={props.value} />
       <Footer />
     </>
@@ -32,13 +31,19 @@ const enhance = compose(
       // TODO 何らかのError処理を行う
     }
 
-    const accessToken = fetchFromCookie(ctx, "accessToken");
-    const isLoggedIn = accessToken != null;
-
-    return {
+    const pageProps = {
       title: "🐱カウンター🐱",
-      isLoggedIn
+      isLoggedIn: isLoggedIn(ctx)
     };
+
+    ctx.store.dispatch(rootActions.pageTransition(pageProps));
+
+    const containerProps = {
+      actions: ctx.store.dispatch,
+      value: ctx.store.getState()
+    };
+
+    return Object.assign(pageProps, containerProps);
   }),
   pure
 );

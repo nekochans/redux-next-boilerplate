@@ -1,5 +1,6 @@
 import actionCreatorFactory, { Action, ActionCreator } from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
+import initialState from "../constants/initialState";
 
 export enum RootActionType {
   page_transition = "PAGE_TRANSITION"
@@ -28,12 +29,9 @@ export const rootActions: RootActions = {
 
 export interface IRootState extends IPageTransitionRequest {}
 
-const initialState: IRootState = {
-  title: "🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱",
-  isLoggedIn: false
-};
+const state: IRootState = initialState.root;
 
-export const reducer = reducerWithInitialState(initialState).caseWithAction<
+export const reducer = reducerWithInitialState(state).caseWithAction<
   IPageTransitionRequest
 >(rootActions.pageTransition, (state, action) => {
   return {

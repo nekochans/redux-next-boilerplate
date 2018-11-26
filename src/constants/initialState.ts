@@ -2,10 +2,11 @@ import { IRootState } from "../modules/Root";
 import { ICounterState } from "../modules/Counter";
 import { IQiitaState } from "../modules/Qiita";
 import { IMyState } from "../modules/My";
+import { isLoggedIn } from "../domain/Auth";
 
 const rootState: IRootState = {
   title: "🐱(=^・^=)🐱ホーム🐱(=^・^=)🐱",
-  isLoggedIn: false
+  isLoggedIn: isLoggedIn()
 };
 
 const counterState: ICounterState = {
