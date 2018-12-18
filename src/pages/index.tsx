@@ -2,23 +2,20 @@ import React from "react";
 import { NextContext } from "next";
 import { compose, pure, setStatic } from "recompose";
 import Title from "../components/Title";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { rootActions } from "../modules/Root";
 import { isLoggedIn } from "../domain/Auth";
 import { IReduxState } from "../store";
+import Layout from "../components/Layout";
 
 interface IProps {
   value: IReduxState;
 }
 
-const IndexPage: React.SFC<IProps> = (props: IProps) => {
+const IndexPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
-    <>
-      <Navbar value={props.value} />
+    <Layout value={props.value}>
       <Title title={props.value.root.title} />
-      <Footer />
-    </>
+    </Layout>
   );
 };
 

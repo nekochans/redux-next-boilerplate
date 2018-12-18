@@ -1,7 +1,6 @@
 import React from "react";
 import { compose, setStatic, pure } from "recompose";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Layout from "../components/Layout";
 import MyContainer from "../containers/My";
 import { Dispatch } from "redux";
 import { IReduxState, ReduxAction } from "../store";
@@ -15,17 +14,15 @@ interface IProps {
   value: IReduxState;
 }
 
-const MyPage: React.SFC<IProps> = (props: IProps) => {
+const MyPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
-    <>
-      <Navbar value={props.value} />
+    <Layout value={props.value}>
       {props.value.root.isLoggedIn ? (
         <MyContainer value={props.value} actions={props.actions} />
       ) : (
         <h2 className="title is-3">🐱ログインを行って下さい🐱</h2>
       )}
-      <Footer />
-    </>
+    </Layout>
   );
 };
 
