@@ -23,7 +23,7 @@ const DecrementButton = styled("button").attrs({
   className: "button is-danger"
 })``;
 
-export const Counter: React.SFC<IProps> = (props: IProps) => {
+export const Counter: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <>
       <CountResult>🐱 {props.value.count} 🐱</CountResult>

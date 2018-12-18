@@ -14,7 +14,7 @@ interface IProps {
   value: IReduxState;
 }
 
-const MyPage: React.SFC<IProps> = (props: IProps) => {
+const MyPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Layout value={props.value}>
       {props.value.root.isLoggedIn ? (

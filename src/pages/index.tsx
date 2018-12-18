@@ -11,7 +11,7 @@ interface IProps {
   value: IReduxState;
 }
 
-const IndexPage: React.SFC<IProps> = (props: IProps) => {
+const IndexPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Layout value={props.value}>
       <Title title={props.value.root.title} />

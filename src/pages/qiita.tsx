@@ -14,7 +14,7 @@ interface IProps {
   value: IReduxState;
 }
 
-const QiitaPage: React.SFC<IProps> = (props: IProps) => {
+const QiitaPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Layout value={props.value}>
       <QiitaContainer value={props.value} actions={props.actions} />

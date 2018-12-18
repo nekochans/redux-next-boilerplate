@@ -14,7 +14,7 @@ interface IProps {
   handleChange: () => {};
 }
 
-const QiitaUserForm: React.SFC<IProps> = (props: IProps) => {
+const QiitaUserForm: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <>
       <form method="post" onSubmit={props.handleSubmit}>

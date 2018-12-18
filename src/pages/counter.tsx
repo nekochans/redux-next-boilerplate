@@ -13,7 +13,7 @@ interface IProps {
   value: IReduxState;
 }
 
-export const CounterPage: React.SFC<IProps> = (props: IProps) => {
+export const CounterPage: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Layout value={props.value}>
       <CounterContainer actions={props.actions} value={props.value} />

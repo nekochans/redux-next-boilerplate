@@ -10,7 +10,7 @@ const QiitaUserCard = styled("div").attrs({ className: "card" })`
   margin-top: 20px;
 `;
 
-const QiitaUser: React.SFC<IProps> = (props: IProps) => {
+const QiitaUser: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <>
       <QiitaUserCard>

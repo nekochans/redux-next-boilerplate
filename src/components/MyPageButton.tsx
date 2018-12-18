@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const MyPageButton: React.SFC<{}> = () => {
+const MyPageButton: React.FunctionComponent<{}> = () => {
   return (
     <>
       <Link href="/my">
