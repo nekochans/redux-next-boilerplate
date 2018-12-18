@@ -4,8 +4,7 @@ import { Dispatch } from "redux";
 import { IReduxState, ReduxAction } from "../store";
 import { compose, pure, setStatic } from "recompose";
 import { NextContext } from "next";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Layout from "../components/Layout";
 import { isLoggedIn } from "../domain/Auth";
 import { rootActions } from "../modules/Root";
 
@@ -16,11 +15,9 @@ interface IProps {
 
 export const CounterPage: React.SFC<IProps> = (props: IProps) => {
   return (
-    <>
-      <Navbar value={props.value} />
+    <Layout value={props.value}>
       <CounterContainer actions={props.actions} value={props.value} />
-      <Footer />
-    </>
+    </Layout>
   );
 };
 

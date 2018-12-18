@@ -5,8 +5,7 @@ import { Dispatch } from "redux";
 import QiitaContainer from "../containers/Qiita";
 import { NextContext } from "next";
 import { compose, setStatic, pure } from "recompose";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Layout from "../components/Layout";
 import { isLoggedIn } from "../domain/Auth";
 import { rootActions } from "../modules/Root";
 
@@ -17,11 +16,9 @@ interface IProps {
 
 const QiitaPage: React.SFC<IProps> = (props: IProps) => {
   return (
-    <>
-      <Navbar value={props.value} />
+    <Layout value={props.value}>
       <QiitaContainer value={props.value} actions={props.actions} />
-      <Footer />
-    </>
+    </Layout>
   );
 };
 
