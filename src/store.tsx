@@ -21,7 +21,7 @@ export interface IReduxState {
 export type ReduxAction = CounterAction | QiitaAction | MyAction | RootAction;
 
 export const configureStore = (state = initialState) => {
-  const store = createStore(
+  const store: any = createStore(
     combineReducers({
       root,
       counter,
