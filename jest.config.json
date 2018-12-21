@@ -20,5 +20,10 @@
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
-  "verbose": true
+  "verbose": true,
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
+  "setupFiles": [
+    "<rootDir>/test/setupEnzyme.ts"
+  ],
+  "testPathIgnorePatterns": ["/lib/", "/node_modules/"]
 }
