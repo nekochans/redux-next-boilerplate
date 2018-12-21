@@ -1,6 +1,9 @@
 {
   "extends": "../tsconfig.server.json",
   "compilerOptions": {
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "outDir": "dist/test",
     "types": [
       "node",
