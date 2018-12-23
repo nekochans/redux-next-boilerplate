@@ -1,0 +1,89 @@
+service: redux-next-boilerplate
+
+plugins:
+  - serverless-plugin-warmup
+  - serverless-prune-plugin
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-northeast-1
+  stage: ${env:DEPLOY_STAGE}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+  logRetentionInDays: 30
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource:
+        - "arn:aws:dynamodb:ap-northeast-1:*:*"
+        - Fn::Join:
+          - ":"
+          - - arn:aws:lambda
+            - Ref: AWS::Region
+            - Ref: AWS::AccountId
+            - function:${self:service}-${opt:stage, self:provider.stage}-*
+  environment:
+    DEPLOY_STAGE: ${env:DEPLOY_STAGE}
+    APP_URL: ${env:APP_URL}
+    QIITA_CLIENT_ID: ${env:QIITA_CLIENT_ID}
+    QIITA_CLIENT_SECRET: ${env:QIITA_CLIENT_SECRET}
+
+custom:
+  warmup:
+    prewarm: true
+  prune:
+    automatic: true
+    number: 3
+  profiles:
+    dev: nekochans-dev
+
+resources:
+  Resources:
+    WarmUpPluginLogGroup:
+      Properties:
+        RetentionInDays: "1"
+
+package:
+  individually: true
+  exclude:
+    - .git/**
+    - .github/**
+    - dist/**
+    - node_modules/.bin/**
+    - node_modules/.cache/**
+    - src/**
+    - test/**
+    - .babelrc
+    - .gitignore
+    - jest.config.json
+    - next.config.js
+    - package.json
+    - README.md
+    - serverless.yml
+    - tsconfig.json
+    - tsconfig.server.json
+    - tslint.json
+    - yarn.lock
+
+functions:
+  app:
+    handler: dist/server/lambda.handler
+    warmup: true
+    package:
+      include:
+        - dist/**
+        - src/.next/**
+        - node_modules/timed-out/**
+      exclude:
+        - src/.next/**/*.map
+    events:
+      - http:
+          method: GET
+          path: /
+          cors: true
+      - http:
+          method: GET
+          path: "/{proxy+}"
+          cors: true
+    timeout: 30
