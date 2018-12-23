@@ -69,3 +69,6 @@ dist
 # IDEA setting file
 .idea
 redux-next-boilerplate.iml
+
+# serverless output
+.serverless
